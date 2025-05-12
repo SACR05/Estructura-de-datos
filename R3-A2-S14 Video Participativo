@@ -1,0 +1,92 @@
+import tkinter as tk
+from tkinter import messagebox, simpledialog
+
+
+def metodo_burbuja(lista):
+    n = len(lista)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if lista[j] > lista[j + 1]:
+                lista[j], lista[j + 1] = lista[j + 1], lista[j]
+    return lista
+
+
+def metodo_seleccion(lista):
+    n = len(lista)
+    for i in range(n):
+        min_idx = i
+        for j in range(i + 1, n):
+            if lista[j] < lista[min_idx]:
+                min_idx = j
+        lista[i], lista[min_idx] = lista[min_idx], lista[i]
+    return lista
+
+
+def quicksort(lista):
+    if len(lista) <= 1:
+        return lista
+    else:
+        pivote = lista[0]
+        menores = [x for x in lista[1:] if x <= pivote]
+        mayores = [x for x in lista[1:] if x > pivote]
+        return quicksort(menores) + [pivote] + quicksort(mayores)
+
+
+def pedir_lista():
+    entrada = simpledialog.askstring("Entrada", "Introduce una lista de números separados por coma (ej: 4,2,7,1):")
+    if entrada:
+        try:
+            return [int(x.strip()) for x in entrada.split(',')]
+        except ValueError:
+            messagebox.showerror("Error", "Entrada inválida. Asegúrate de ingresar solo números separados por coma.")
+            return None
+    return None
+
+
+def ordenar_burbuja():
+    lista = pedir_lista()
+    if lista is not None:
+        ordenada = metodo_burbuja(lista)
+        messagebox.showinfo("Resultado", f"Lista ordenada con Burbuja:\n{ordenada}")
+
+
+def ordenar_seleccion():
+    lista = pedir_lista()
+    if lista is not None:
+        ordenada = metodo_seleccion(lista)
+        messagebox.showinfo("Resultado", f"Lista ordenada con Selección:\n{ordenada}")
+
+
+def ordenar_quicksort():
+    lista = pedir_lista()
+    if lista is not None:
+        ordenada = quicksort(lista)
+        messagebox.showinfo("Resultado", f"Lista ordenada con Quicksort:\n{ordenada}")
+
+
+def salir():
+    ventana.destroy()
+
+
+
+ventana = tk.Tk()
+ventana.title("Métodos de Ordenamiento")
+ventana.geometry("400x300")
+
+titulo = tk.Label(ventana, text="Selecciona un método de ordenamiento", font=("Arial", 14))
+titulo.pack(pady=20)
+
+btn_burbuja = tk.Button(ventana, text="Método Burbuja", width=30, command=ordenar_burbuja)
+btn_burbuja.pack(pady=5)
+
+btn_seleccion = tk.Button(ventana, text="Método Selección", width=30, command=ordenar_seleccion)
+btn_seleccion.pack(pady=5)
+
+btn_quicksort = tk.Button(ventana, text="Método Quicksort", width=30, command=ordenar_quicksort)
+btn_quicksort.pack(pady=5)
+
+btn_salir = tk.Button(ventana, text="Salir", width=30, command=salir)
+btn_salir.pack(pady=20)
+
+ventana.mainloop()
+ 
