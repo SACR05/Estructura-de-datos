@@ -1,0 +1,73 @@
+class Bicola:
+    def __init__(self):
+        self.items = []
+    
+    def esta_vacia(self):
+        return len(self.items) == 0
+    
+    def insertar_derecha(self, elemento):
+        self.items.append(elemento)
+        print(f"Elemento {elemento} insertado por la derecha")
+    
+    def insertar_izquierda(self, elemento):
+        self.items.insert(0, elemento)
+        print(f"Elemento {elemento} insertado por la izquierda")
+    
+    def atender_derecha(self):
+        if not self.esta_vacia():
+            elemento = self.items.pop()
+            print(f"Elemento {elemento} atendido por la derecha")
+            return elemento
+        else:
+            print("La bicola está vacía")
+            return None
+    
+    def atender_izquierda(self):
+        if not self.esta_vacia():
+            elemento = self.items.pop(0)
+            print(f"Elemento {elemento} atendido por la izquierda")
+            return elemento
+        else:
+            print("La bicola está vacía")
+            return None
+    
+    def listar(self):
+        if not self.esta_vacia():
+            print("Contenido de la bicola:")
+            print(self.items)
+        else:
+            print("La bicola está vacía")
+
+def menu():
+    bicola = Bicola()
+    while True:
+        print("\n=== Menú de la Bicola ===")
+        print("1. Insertar por la derecha")
+        print("2. Insertar por la izquierda")
+        print("3. Atender por la derecha")
+        print("4. Atender por la izquierda")
+        print("5. Listar")
+        print("6. Salir")
+        
+        opcion = input("Seleccione una opción (1-6): ")
+        
+        if opcion == "1":
+            elemento = input("Ingrese el elemento a insertar: ")
+            bicola.insertar_derecha(elemento)
+        elif opcion == "2":
+            elemento = input("Ingrese el elemento a insertar: ")
+            bicola.insertar_izquierda(elemento)
+        elif opcion == "3":
+            bicola.atender_derecha()
+        elif opcion == "4":
+            bicola.atender_izquierda()
+        elif opcion == "5":
+            bicola.listar()
+        elif opcion == "6":
+            print("Saliendo del programa...")
+            break
+        else:
+            print("Opción no válida. Por favor, seleccione una opción válida.")
+
+if __name__ == "__main__":
+    menu()
